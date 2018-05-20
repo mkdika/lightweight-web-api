@@ -5,9 +5,15 @@ This repository is about my POC of alternative Java lightweight framework stack 
 
 
 
-## Tech Stack and Library
+## 1. Introduction
 
->  _Please note that all these framework or library stack is till in testing (`read`: POC)._
+_coming soon..._
+
+
+
+## 2. Tech Stack and Library
+
+>  _Please note that all these framework or library stack is still under testing (`read`: POC)._
 
 - [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html), use Java 8 platform.
 - [Maven3](https://maven.apache.org/index.html), as build system and dependency management.
@@ -24,7 +30,20 @@ This repository is about my POC of alternative Java lightweight framework stack 
 
   
 
-## Setup, Running and Testing Application
+## 3. Sample Application Scenario
+
+_coming soon..._
+
+
+
+## 4. Setup, Running and Testing Application
+
+_coming soon..._
+
+
+
+## 5. Conclusion
+
 _coming soon..._
 
 
