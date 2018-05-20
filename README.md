@@ -7,7 +7,7 @@ This repository is about my POC of alternative Java lightweight framework stack 
 
 ## Tech Stack and Library
 
->  Please note that all these framework or library stack is till in testing (`read`: POC).
+>  _Please note that all these framework or library stack is till in testing (`read`: POC)._
 
 - [Java 8](http://www.oracle.com/technetwork/java/javase/downloads/java-archive-javase8-2177648.html), use Java 8 platform.
 - [Maven3](https://maven.apache.org/index.html), as build system and dependency management.
@@ -16,6 +16,7 @@ This repository is about my POC of alternative Java lightweight framework stack 
 - [EBean ORM](http://ebean-orm.github.io/), a fast and simple data access on the JVM.
 - [Dagger 2](https://google.github.io/dagger/), a fully static, compile-time dependency Injection framework.
 - Testing Library:
+   - [JUnit4](https://junit.org/junit4/), as unit testing framework.
    - [Java Hamcrest](http://hamcrest.org/JavaHamcrest/), for ease matcher and more human readable equality test.
     - [JUnitParams](https://github.com/Pragmatists/JUnitParams), for ease parameterized unit test.
     - [Mockito](http://site.mockito.org/), a mock test framework.
