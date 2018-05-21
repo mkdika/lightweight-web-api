@@ -24,8 +24,11 @@
 package com.mkdika.lwa.app.item;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,14 +41,18 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name="item")
 public class Item implements Serializable {
     
     @Id
+    @GeneratedValue
     int id;
+        
+    @Column
     String itemName;
 
-    public Item(int id, String itemName) {
-        this.id = id;
+    public Item(String itemName) {
         this.itemName = itemName;
-    }           
+    }
+   
 }

@@ -25,11 +25,14 @@ package com.mkdika.lwa.app.customer;
 
 import com.mkdika.lwa.app.item.Item;
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -42,24 +45,28 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "customer_cart")
 public class CustomerCart implements Serializable {
-    
+
     @Id
+    @GeneratedValue
     long id;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "customer",referencedColumnName = "id")
+    @JoinColumn(name = "customer", referencedColumnName = "id")
     Customer customer;
-    
+
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "item",referencedColumnName = "id")            
+    @JoinColumn(name = "item", referencedColumnName = "id")
     Item item;
-    
+
+    @Column
     double qty;
 
     public CustomerCart(Customer customer, Item item, double qty) {
         this.customer = customer;
         this.item = item;
         this.qty = qty;
-    }            
+    }
+
 }

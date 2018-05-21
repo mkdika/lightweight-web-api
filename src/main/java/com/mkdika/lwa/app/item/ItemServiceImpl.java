@@ -23,10 +23,47 @@
  */
 package com.mkdika.lwa.app.item;
 
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import static com.mkdika.lwa.helper.DbConnectionFactory.getConnection;
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author Maikel Chandika (mkdika@gmail.com)
  */
 public class ItemServiceImpl implements ItemService {
-    
+
+    private final Dao<Item, Integer> itemDao;
+
+    public ItemServiceImpl() throws SQLException {
+        itemDao = DaoManager.createDao(getConnection(), Item.class);
+    }
+
+    @Override
+    public List<Item> findAllCustomer() throws SQLException {
+        return itemDao.queryForAll();
+    }
+
+    @Override
+    public Item findCustomerById(int id) throws SQLException {
+        return itemDao.queryForId(id);
+    }
+
+    @Override
+    public void insertCustomer(Item item) throws SQLException {
+        itemDao.create(item);
+    }
+
+    @Override
+    public void updateCustomer(Item item) throws SQLException {
+        itemDao.update(item);
+    }
+
+    @Override
+    public void deleteCustomer(Item item) throws SQLException {
+        itemDao.delete(item);
+    }
+
 }

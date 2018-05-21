@@ -24,8 +24,11 @@
 package com.mkdika.lwa.app.customer;
 
 import java.io.Serializable;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,14 +41,26 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "customer")
 public class Customer implements Serializable {
-    
-    @Id    
+
+    @Id
+    @GeneratedValue
     int id;
+
+    @Column
     String name;
 
-    public Customer(int id, String name) {
-        this.id = id;
+    public Customer(String name) {
         this.name = name;
-    }            
+    }
+
+    @Override
+    public String toString() {
+        return new StringBuilder().append("Id: ")
+                                  .append(this.id)
+                                  .append(", Name: ")
+                                  .append(this.name).toString();
+    }
+
 }

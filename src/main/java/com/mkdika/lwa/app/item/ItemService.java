@@ -23,10 +23,23 @@
  */
 package com.mkdika.lwa.app.item;
 
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author Maikel Chandika (mkdika@gmail.com)
  */
 public interface ItemService {
+    
+    List<Item> findAllCustomer() throws SQLException;
+    
+    Item findCustomerById(int id) throws SQLException;
+    
+    void insertCustomer(Item item) throws SQLException;
+    
+    void updateCustomer(Item item) throws SQLException;
+    
+    void deleteCustomer(Item item) throws SQLException;    
     
 }

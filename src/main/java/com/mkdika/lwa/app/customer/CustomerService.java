@@ -23,10 +23,23 @@
  */
 package com.mkdika.lwa.app.customer;
 
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author Maikel Chandika (mkdika@gmail.com)
  */
 public interface CustomerService {
+    
+    List<Customer> findAllCustomer() throws SQLException;
+    
+    Customer findCustomerById(int id) throws SQLException;
+    
+    void insertCustomer(Customer c) throws SQLException;
+    
+    void updateCustomer(Customer c) throws SQLException;
+    
+    void deleteCustomer(Customer c) throws SQLException;        
     
 }

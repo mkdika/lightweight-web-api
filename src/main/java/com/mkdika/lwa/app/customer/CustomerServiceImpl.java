@@ -23,10 +23,47 @@
  */
 package com.mkdika.lwa.app.customer;
 
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.dao.DaoManager;
+import static com.mkdika.lwa.helper.DbConnectionFactory.getConnection;
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author Maikel Chandika (mkdika@gmail.com)
  */
 public class CustomerServiceImpl implements CustomerService {
-    
+
+    private final Dao<Customer, Integer> customerDao;
+
+    public CustomerServiceImpl() throws SQLException {
+        customerDao = DaoManager.createDao(getConnection(), Customer.class);
+    }
+
+    @Override
+    public List<Customer> findAllCustomer() throws SQLException {
+        return customerDao.queryForAll();
+    }
+
+    @Override
+    public Customer findCustomerById(int id) throws SQLException {
+        return customerDao.queryForId(id);
+    }
+
+    @Override
+    public void insertCustomer(Customer c) throws SQLException {
+        customerDao.create(c);
+    }
+
+    @Override
+    public void updateCustomer(Customer c) throws SQLException {
+        customerDao.update(c);
+    }
+
+    @Override
+    public void deleteCustomer(Customer c) throws SQLException {
+        customerDao.delete(c);
+    }
+
 }

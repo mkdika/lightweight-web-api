@@ -23,14 +23,34 @@
  */
 package com.mkdika.lwa;
 
+import com.j256.ormlite.table.TableUtils;
+import com.mkdika.lwa.app.customer.Customer;
+import com.mkdika.lwa.app.customer.CustomerCart;
+import com.mkdika.lwa.app.item.Item;
+import com.mkdika.lwa.helper.AppUtil;
+import static com.mkdika.lwa.helper.DbConnectionFactory.getConnection;
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author Maikel Chandika (mkdika@gmail.com)
  */
+
 public class LightweightWebApiApplication {
+                
+    public static void main(String[] args) throws SQLException {    
+        preInit();
+    }
     
-    public static void main(String[] args) {
-        System.out.println("Hello World!");
+    private static void preInit() throws SQLException { 
+        // drop all table & create
+        TableUtils.dropTable(getConnection(), Customer.class, true);
+        TableUtils.dropTable(getConnection(), CustomerCart.class, true);
+        TableUtils.dropTable(getConnection(), Item.class, true);
+        TableUtils.createTableIfNotExists(getConnection(), Customer.class);
+        TableUtils.createTableIfNotExists(getConnection(), CustomerCart.class);
+        TableUtils.createTableIfNotExists(getConnection(), Item.class);                
     }
     
 }

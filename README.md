@@ -24,9 +24,9 @@ _coming soon..._
 - Testing Library:
    - [JUnit4](https://junit.org/junit4/), as unit testing framework.
    - [Java Hamcrest](http://hamcrest.org/JavaHamcrest/), for ease matcher and more human readable equality test.
-    - [JUnitParams](https://github.com/Pragmatists/JUnitParams), for ease parameterized unit test.
-    - [Mockito](http://site.mockito.org/), a mock test framework.
-    - [Jacoco](https://www.eclemma.org/jacoco/), a code coverage library.
+   - [JUnitParams](https://github.com/Pragmatists/JUnitParams), for ease parameterized unit test.
+   - [Mockito](http://site.mockito.org/), a mock test framework.
+   - [Jacoco](https://www.eclemma.org/jacoco/), a code coverage library.
 
   
 
@@ -49,4 +49,4 @@ _coming soon..._
 
 
 ## Related Reference
-_coming soon..._
+- [Introduction to ORMLite](http://www.baeldung.com/ormlite)
