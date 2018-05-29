@@ -20,6 +20,7 @@
         <junitparams.version>1.1.1</junitparams.version>
         <postgresql.version>9.4.1212.jre7</postgresql.version>
         <jacoco.version>0.7.9</jacoco.version>
+        <slf4j.version>1.7.13</slf4j.version>
     </properties>
     <dependencies>
         <!--START -  Core dependencies-->
@@ -27,6 +28,12 @@
             <groupId>io.javalin</groupId>
             <artifactId>javalin</artifactId>
             <version>${javalin.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-simple</artifactId>
+            <version>${slf4j.version}</version>
         </dependency>
                         
         <dependency>

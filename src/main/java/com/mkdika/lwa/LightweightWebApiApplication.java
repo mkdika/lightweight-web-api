@@ -24,38 +24,53 @@
 package com.mkdika.lwa;
 
 import com.google.inject.Guice;
+import com.google.inject.Inject;
 import com.google.inject.Injector;
+import com.google.inject.name.Named;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.mkdika.lwa.app.customer.Customer;
 import com.mkdika.lwa.app.customer.CustomerCart;
 import com.mkdika.lwa.app.item.Item;
 import com.mkdika.lwa.config.BasicModule;
+import io.javalin.Javalin;
 import java.sql.SQLException;
+import lombok.Getter;
 
 /**
  *
  * @author Maikel Chandika (mkdika@gmail.com)
  */
-
+@Getter
 public class LightweightWebApiApplication {
-    
-    private static JdbcPooledConnectionSource connection;
-        
+
+    @Inject
+    private JdbcPooledConnectionSource connection;
+
+    @Inject
+    @Named("javalin.server.port")
+    private int appServerPort;
+
     public static void main(String[] args) throws SQLException {
         Injector injector = Guice.createInjector(new BasicModule());
-        connection = injector.getInstance(JdbcPooledConnectionSource.class);
-        preInit();
+        LightweightWebApiApplication app  = injector.getInstance(LightweightWebApiApplication.class);
+        JdbcPooledConnectionSource connection = app.getConnection();
+        
+        preInitDatabase(connection);
+
+        // start JAVALIN
+        Javalin javalinServer = Javalin.create()
+                .port(app.getAppServerPort())
+                .start();
     }
-    
-    private static void preInit() throws SQLException { 
+
+    private static void preInitDatabase(JdbcPooledConnectionSource connection) throws SQLException {
         // drop all table & create
         TableUtils.dropTable(connection, Customer.class, true);
         TableUtils.dropTable(connection, CustomerCart.class, true);
         TableUtils.dropTable(connection, Item.class, true);
         TableUtils.createTableIfNotExists(connection, Customer.class);
         TableUtils.createTableIfNotExists(connection, CustomerCart.class);
-        TableUtils.createTableIfNotExists(connection, Item.class);          
+        TableUtils.createTableIfNotExists(connection, Item.class);
     }
-    
 }
