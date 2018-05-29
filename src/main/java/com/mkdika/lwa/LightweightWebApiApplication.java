@@ -32,7 +32,7 @@ import com.j256.ormlite.table.TableUtils;
 import com.mkdika.lwa.app.customer.Customer;
 import com.mkdika.lwa.app.customer.CustomerCart;
 import com.mkdika.lwa.app.item.Item;
-import com.mkdika.lwa.config.BasicModule;
+import com.mkdika.lwa.config.GuiceBasicModule;
 import io.javalin.Javalin;
 import java.sql.SQLException;
 import lombok.Getter;
@@ -52,11 +52,10 @@ public class LightweightWebApiApplication {
     private int appServerPort;
 
     public static void main(String[] args) throws SQLException {
-        Injector injector = Guice.createInjector(new BasicModule());
-        LightweightWebApiApplication app  = injector.getInstance(LightweightWebApiApplication.class);
-        JdbcPooledConnectionSource connection = app.getConnection();
-        
-        preInitDatabase(connection);
+        Injector injector = Guice.createInjector(new GuiceBasicModule());
+        LightweightWebApiApplication app = injector.getInstance(LightweightWebApiApplication.class);
+
+        preInitDatabase(app.getConnection());
 
         // start JAVALIN
         Javalin javalinServer = Javalin.create()

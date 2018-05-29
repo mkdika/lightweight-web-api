@@ -45,7 +45,7 @@ import java.util.logging.Logger;
  *
  * @author Maikel Chandika (mkdika@gmail.com)
  */
-public class BasicModule extends AbstractModule {
+public class GuiceBasicModule extends AbstractModule {
 
     @Override
     protected void configure() {
@@ -86,7 +86,7 @@ public class BasicModule extends AbstractModule {
                 dataSource.setMaxConnectionsFree(maxConnectionsFree);
                 return dataSource;
             } catch (SQLException ex) {
-                Logger.getLogger(BasicModule.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GuiceBasicModule.class.getName()).log(Level.SEVERE, null, ex);
             }
             return null;
         }
