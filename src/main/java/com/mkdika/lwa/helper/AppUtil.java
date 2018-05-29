@@ -23,15 +23,6 @@
  */
 package com.mkdika.lwa.helper;
 
-import com.mkdika.lwa.app.customer.CustomerService;
-import com.mkdika.lwa.app.customer.CustomerServiceImpl;
-import com.mkdika.lwa.app.item.ItemService;
-import com.mkdika.lwa.app.item.ItemServiceImpl;
-import java.sql.SQLException;
-import java.util.ResourceBundle;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author Maikel Chandika (mkdika@gmail.com)
@@ -40,57 +31,6 @@ import java.util.logging.Logger;
  */
 public final class AppUtil {
 
-    private static volatile CustomerService customerServiceInstance;
-
-    private static volatile ItemService itemServiceInstance;
-    
-    private static volatile ResourceBundle rb;
-
     private AppUtil() {
     }
-
-    public static final CustomerService getCustomerService() {
-        if (customerServiceInstance != null) {
-            return customerServiceInstance;
-        }
-        synchronized (AppUtil.class) {
-            if (customerServiceInstance == null) {
-                try {
-                    customerServiceInstance = new CustomerServiceImpl();
-                } catch (SQLException ex) {
-                    Logger.getLogger(AppUtil.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            return customerServiceInstance;
-        }
-    }
-
-    public static final ItemService getItemService() {
-        if (itemServiceInstance != null) {
-            return itemServiceInstance;
-        }
-        synchronized (AppUtil.class) {
-            if (itemServiceInstance == null) {
-                try {
-                    itemServiceInstance = new ItemServiceImpl();
-                } catch (SQLException ex) {
-                    Logger.getLogger(AppUtil.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            }
-            return itemServiceInstance;
-        }
-    }
-    
-    public static final String getAppProperty(String keyProp) {
-        if (rb != null) {
-            return rb.getString(keyProp);
-        }
-        synchronized (AppUtil.class) {
-            if (rb == null) {
-                rb = ResourceBundle.getBundle("application");
-            }
-            return rb.getString(keyProp);
-        }                
-    }
-
 }

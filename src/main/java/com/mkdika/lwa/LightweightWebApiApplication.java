@@ -23,14 +23,15 @@
  */
 package com.mkdika.lwa;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.mkdika.lwa.app.customer.Customer;
 import com.mkdika.lwa.app.customer.CustomerCart;
 import com.mkdika.lwa.app.item.Item;
-import com.mkdika.lwa.helper.AppUtil;
-import static com.mkdika.lwa.helper.DbConnectionFactory.getConnection;
+import com.mkdika.lwa.config.BasicModule;
 import java.sql.SQLException;
-import java.util.List;
 
 /**
  *
@@ -38,19 +39,23 @@ import java.util.List;
  */
 
 public class LightweightWebApiApplication {
-                
-    public static void main(String[] args) throws SQLException {    
+    
+    private static JdbcPooledConnectionSource connection;
+        
+    public static void main(String[] args) throws SQLException {
+        Injector injector = Guice.createInjector(new BasicModule());
+        connection = injector.getInstance(JdbcPooledConnectionSource.class);
         preInit();
     }
     
     private static void preInit() throws SQLException { 
         // drop all table & create
-        TableUtils.dropTable(getConnection(), Customer.class, true);
-        TableUtils.dropTable(getConnection(), CustomerCart.class, true);
-        TableUtils.dropTable(getConnection(), Item.class, true);
-        TableUtils.createTableIfNotExists(getConnection(), Customer.class);
-        TableUtils.createTableIfNotExists(getConnection(), CustomerCart.class);
-        TableUtils.createTableIfNotExists(getConnection(), Item.class);                
+        TableUtils.dropTable(connection, Customer.class, true);
+        TableUtils.dropTable(connection, CustomerCart.class, true);
+        TableUtils.dropTable(connection, Item.class, true);
+        TableUtils.createTableIfNotExists(connection, Customer.class);
+        TableUtils.createTableIfNotExists(connection, CustomerCart.class);
+        TableUtils.createTableIfNotExists(connection, Item.class);          
     }
     
 }
