@@ -67,7 +67,7 @@ public class LightweightWebApiApplication {
 
         app.routes(() -> {
             path("items", () -> {
-                get(ItemHandler::getAllItem);
+                get(ItemHandler::getAllItem); // error: incompatible types: invalid method reference
             });
         });
     }
