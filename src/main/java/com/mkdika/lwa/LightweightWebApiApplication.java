@@ -53,9 +53,6 @@ public class LightweightWebApiApplication {
     @Inject
     @Named("javalin.server.port")
     private int appServerPort;
-    
-//    @Inject
-    private ItemHandler itemHandler;
 
     public static void main(String[] args) throws SQLException {
         Injector injector = Guice.createInjector(new GuiceBasicModule());
