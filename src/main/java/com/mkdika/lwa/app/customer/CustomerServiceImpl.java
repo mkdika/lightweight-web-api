@@ -69,5 +69,4 @@ public class CustomerServiceImpl implements CustomerService {
     public void deleteCustomer(Customer c) throws SQLException {
         customerDao.delete(c);
     }
-
 }

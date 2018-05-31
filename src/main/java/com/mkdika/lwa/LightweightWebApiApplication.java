@@ -32,7 +32,10 @@ import com.j256.ormlite.table.TableUtils;
 import com.mkdika.lwa.app.customer.Customer;
 import com.mkdika.lwa.app.customer.CustomerCart;
 import com.mkdika.lwa.app.item.Item;
+import com.mkdika.lwa.app.item.ItemHandler;
 import com.mkdika.lwa.config.GuiceBasicModule;
+import static io.javalin.ApiBuilder.get;
+import static io.javalin.ApiBuilder.path;
 import io.javalin.Javalin;
 import java.sql.SQLException;
 import lombok.Getter;
@@ -50,17 +53,26 @@ public class LightweightWebApiApplication {
     @Inject
     @Named("javalin.server.port")
     private int appServerPort;
+    
+//    @Inject
+    private ItemHandler itemHandler;
 
     public static void main(String[] args) throws SQLException {
         Injector injector = Guice.createInjector(new GuiceBasicModule());
-        LightweightWebApiApplication app = injector.getInstance(LightweightWebApiApplication.class);
+        LightweightWebApiApplication starter = injector.getInstance(LightweightWebApiApplication.class);
 
-        preInitDatabase(app.getConnection());
+        preInitDatabase(starter.getConnection());
 
         // start JAVALIN
-        Javalin javalinServer = Javalin.create()
-                .port(app.getAppServerPort())
+        Javalin app = Javalin.create()
+                .port(starter.getAppServerPort())
                 .start();
+
+        app.routes(() -> {
+            path("items", () -> {
+                get(ItemHandler::getAllItem);
+            });
+        });
     }
 
     private static void preInitDatabase(JdbcPooledConnectionSource connection) throws SQLException {

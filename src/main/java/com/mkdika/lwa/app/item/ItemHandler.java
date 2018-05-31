@@ -23,10 +23,28 @@
  */
 package com.mkdika.lwa.app.item;
 
+import com.google.inject.Inject;
+import io.javalin.Context;
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author Maikel Chandika (mkdika@gmail.com)
  */
-public class ItemHandler {
+public class ItemHandler  {
     
+    @Inject
+    private ItemService itemService;
+    
+    public void getAllItem(Context ctx) throws SQLException {
+        List<Item> list = itemService.findAllCustomer();
+        if (list.size() > 0){            
+            ctx.json(list).status(200);
+        }else {
+            ctx.json(list).status(204);
+        }
+    }
+
+   
 }
