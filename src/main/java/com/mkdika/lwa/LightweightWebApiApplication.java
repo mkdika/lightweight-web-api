@@ -57,6 +57,7 @@ public class LightweightWebApiApplication {
     public static void main(String[] args) throws SQLException {
         Injector injector = Guice.createInjector(new GuiceBasicModule());
         LightweightWebApiApplication starter = injector.getInstance(LightweightWebApiApplication.class);
+        ItemHandler itemHandler = injector.getInstance(ItemHandler.class);
 
         preInitDatabase(starter.getConnection());
 
@@ -67,7 +68,7 @@ public class LightweightWebApiApplication {
 
         app.routes(() -> {
             path("items", () -> {
-                get(ItemHandler::getAllItem); // error: incompatible types: invalid method reference
+                get(itemHandler::getAllItem); // error: incompatible types: invalid method reference
             });
         });
     }
@@ -79,6 +80,6 @@ public class LightweightWebApiApplication {
         TableUtils.dropTable(connection, Item.class, true);
         TableUtils.createTableIfNotExists(connection, Customer.class);
         TableUtils.createTableIfNotExists(connection, CustomerCart.class);
-        TableUtils.createTableIfNotExists(connection, Item.class);
+        TableUtils.createTableIfNotExists(connection, Item.class);     
     }
 }

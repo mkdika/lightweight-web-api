@@ -21,53 +21,14 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.mkdika.lwa.app.item;
-
-import com.google.inject.Inject;
-import com.j256.ormlite.dao.Dao;
-import com.j256.ormlite.dao.DaoManager;
-import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
-import java.sql.SQLException;
-import java.util.List;
+package com.mkdika.lwa.init;
 
 /**
  *
  * @author Maikel Chandika (mkdika@gmail.com)
  */
-public class ItemServiceImpl implements ItemService {
-
-    private final JdbcPooledConnectionSource connection;
-
-    private final Dao<Item, Integer> itemDao;
-
-    @Inject
-    public ItemServiceImpl(JdbcPooledConnectionSource connection) throws SQLException {
-        this.connection = connection;
-        itemDao = DaoManager.createDao(this.connection, Item.class);
-    }
-
-    @Override
-    public List<Item> findAllCustomer() throws SQLException {
-        return itemDao.queryForAll();
-    }
-
-    @Override
-    public Item findCustomerById(int id) throws SQLException {
-        return itemDao.queryForId(id);
-    }
-
-    @Override
-    public void insertCustomer(Item item) throws SQLException {
-        itemDao.create(item);
-    }
-
-    @Override
-    public void updateCustomer(Item item) throws SQLException {
-        itemDao.update(item);
-    }
-
-    @Override
-    public void deleteCustomer(Item item) throws SQLException {
-        itemDao.delete(item);
-    }
+public class DefaultInitData {
+    
+    
+    
 }

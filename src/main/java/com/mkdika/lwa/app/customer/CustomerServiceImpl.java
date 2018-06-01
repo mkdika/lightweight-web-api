@@ -35,14 +35,14 @@ import java.util.List;
  * @author Maikel Chandika (mkdika@gmail.com)
  */
 public class CustomerServiceImpl implements CustomerService {
-    
-    @Inject
-    private JdbcPooledConnectionSource connection;
 
+    private final JdbcPooledConnectionSource connection;
     private final Dao<Customer, Integer> customerDao;
 
-    public CustomerServiceImpl() throws SQLException {
-        customerDao = DaoManager.createDao(connection, Customer.class);
+    @Inject
+    public CustomerServiceImpl(JdbcPooledConnectionSource connection) throws SQLException {
+        this.connection = connection;
+        customerDao = DaoManager.createDao(this.connection, Customer.class);
     }
 
     @Override
