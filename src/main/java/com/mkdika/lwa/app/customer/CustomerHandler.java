@@ -23,10 +23,15 @@
  */
 package com.mkdika.lwa.app.customer;
 
+import com.google.inject.Inject;
+
 /**
  *
  * @author Maikel Chandika (mkdika@gmail.com)
  */
 public class CustomerHandler {
+    
+    @Inject
+    private CustomerService customerService;
     
 }

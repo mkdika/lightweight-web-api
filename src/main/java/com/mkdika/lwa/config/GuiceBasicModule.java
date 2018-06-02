@@ -30,6 +30,7 @@ import com.google.inject.Scopes;
 import com.google.inject.name.Named;
 import com.google.inject.name.Names;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
+import com.mkdika.lwa.app.customer.CustomerHandler;
 import com.mkdika.lwa.app.customer.CustomerService;
 import com.mkdika.lwa.app.customer.CustomerServiceImpl;
 import com.mkdika.lwa.app.item.ItemHandler;
@@ -55,7 +56,8 @@ public class GuiceBasicModule extends AbstractModule {
         bind(CustomerService.class).to(CustomerServiceImpl.class).in(Scopes.SINGLETON);
         bind(ItemService.class).to(ItemServiceImpl.class).in(Scopes.SINGLETON);
         
-//        bind(ItemHandler.class).toInstance(new ItemHandler());
+        bind(ItemHandler.class).toInstance(new ItemHandler());
+        bind(CustomerHandler.class).toInstance(new CustomerHandler());
     }
 
     static class DataSourceProvider implements Provider<JdbcPooledConnectionSource> {

@@ -23,10 +23,31 @@
  */
 package com.mkdika.lwa.router;
 
+import com.google.inject.Inject;
+import com.mkdika.lwa.app.customer.CustomerHandler;
+import com.mkdika.lwa.app.item.ItemHandler;
+import static io.javalin.ApiBuilder.get;
+import static io.javalin.ApiBuilder.path;
+import io.javalin.Javalin;
+
 /**
  *
  * @author Maikel Chandika (mkdika@gmail.com)
  */
 public class ApplicationRouter {
-    
+
+    @Inject
+    private ItemHandler itemHandler;
+
+    @Inject
+    private CustomerHandler customerHandler;
+
+    public void loadApiHandler(Javalin app) {
+        app.routes(() -> {
+            path("items", () -> {
+                get(itemHandler::getAllItem);
+            });
+        });
+    }
+
 }
