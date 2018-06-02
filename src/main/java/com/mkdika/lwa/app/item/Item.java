@@ -41,14 +41,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name="item")
+@Table(name="item",catalog = "testing", schema = "public")
 public class Item implements Serializable {
     
     @Id
     @GeneratedValue
     int id;
         
-    @Column
+    @Column(name = "item_name")
     String itemName;
 
     public Item(String itemName) {

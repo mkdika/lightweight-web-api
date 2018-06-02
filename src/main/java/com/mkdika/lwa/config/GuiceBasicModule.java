@@ -55,7 +55,7 @@ public class GuiceBasicModule extends AbstractModule {
         bind(CustomerService.class).to(CustomerServiceImpl.class).in(Scopes.SINGLETON);
         bind(ItemService.class).to(ItemServiceImpl.class).in(Scopes.SINGLETON);
         
-        bind(ItemHandler.class).toInstance(new ItemHandler());
+//        bind(ItemHandler.class).toInstance(new ItemHandler());
     }
 
     static class DataSourceProvider implements Provider<JdbcPooledConnectionSource> {
@@ -72,16 +72,19 @@ public class GuiceBasicModule extends AbstractModule {
                 @Named("datasource.db.password") final String datasourceDbPassword,
                 @Named("connectionpool.max-connection-age-millis") final long maxConnectionAgeMillis,
                 @Named("connectionpool.max-connections-free") final int maxConnectionsFree) {
-            System.out.println("> datasourceDbUrl: " + datasourceDbUrl);
-            System.out.println("> datasourceDbUsername: " + datasourceDbUsername);
-            System.out.println("> datasourceDbPassword: " + datasourceDbPassword);
-            System.out.println("> maxConnectionAgeMillis: " + maxConnectionAgeMillis);
-            System.out.println("> maxConnectionsFree: " + maxConnectionsFree);
+            
             this.datasourceDbUrl = datasourceDbUrl;
             this.datasourceDbUsername = datasourceDbUsername;
             this.datasourceDbPassword = datasourceDbPassword;
             this.maxConnectionAgeMillis = maxConnectionAgeMillis;
             this.maxConnectionsFree = maxConnectionsFree;
+            System.out.println("\n> ORMLite DATABASE CONNECTION:");
+            System.out.println("> ---------------------------");
+            System.out.println("> datasourceDbUrl        : " + datasourceDbUrl);
+            System.out.println("> datasourceDbUsername   : " + datasourceDbUsername);
+            System.out.println("> datasourceDbPassword   : " + datasourceDbPassword);
+            System.out.println("> maxConnectionAgeMillis : " + maxConnectionAgeMillis);
+            System.out.println("> maxConnectionsFree     : " + maxConnectionsFree+"\n");
         }
 
         @Override

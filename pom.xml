@@ -22,6 +22,7 @@
         <jacoco.version>0.7.9</jacoco.version>
         <slf4j.version>1.7.13</slf4j.version>
         <jackson.version>2.9.5</jackson.version>
+        <guava.version>25.1-jre</guava.version>
     </properties>
     <dependencies>
         <!--START -  Core dependencies-->
@@ -79,6 +80,12 @@
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
             <scope>runtime</scope>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
         </dependency>
         <!--END -  Core dependencies-->
         

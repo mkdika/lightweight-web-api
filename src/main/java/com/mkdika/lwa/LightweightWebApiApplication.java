@@ -28,16 +28,14 @@ import com.google.inject.Inject;
 import com.google.inject.Injector;
 import com.google.inject.name.Named;
 import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
-import com.j256.ormlite.table.TableUtils;
-import com.mkdika.lwa.app.customer.Customer;
-import com.mkdika.lwa.app.customer.CustomerCart;
-import com.mkdika.lwa.app.item.Item;
 import com.mkdika.lwa.app.item.ItemHandler;
 import com.mkdika.lwa.config.GuiceBasicModule;
+import com.mkdika.lwa.init.InitDatabase;
 import static io.javalin.ApiBuilder.get;
 import static io.javalin.ApiBuilder.path;
 import io.javalin.Javalin;
 import java.sql.SQLException;
+import java.util.function.Consumer;
 import lombok.Getter;
 
 /**
@@ -58,8 +56,12 @@ public class LightweightWebApiApplication {
         Injector injector = Guice.createInjector(new GuiceBasicModule());
         LightweightWebApiApplication starter = injector.getInstance(LightweightWebApiApplication.class);
         ItemHandler itemHandler = injector.getInstance(ItemHandler.class);
-
-        preInitDatabase(starter.getConnection());
+        
+        // init database structure
+        executeRunner(starter.getConnection(),InitDatabase::createDbStructure);
+        
+        // init database dummy data
+        executeRunner(starter.getConnection(), InitDatabase::initDbDataFromSQL);
 
         // start JAVALIN
         Javalin app = Javalin.create()
@@ -68,18 +70,12 @@ public class LightweightWebApiApplication {
 
         app.routes(() -> {
             path("items", () -> {
-                get(itemHandler::getAllItem); // error: incompatible types: invalid method reference
+                get(itemHandler::getAllItem);
             });
         });
     }
 
-    private static void preInitDatabase(JdbcPooledConnectionSource connection) throws SQLException {
-        // drop all table & create
-        TableUtils.dropTable(connection, Customer.class, true);
-        TableUtils.dropTable(connection, CustomerCart.class, true);
-        TableUtils.dropTable(connection, Item.class, true);
-        TableUtils.createTableIfNotExists(connection, Customer.class);
-        TableUtils.createTableIfNotExists(connection, CustomerCart.class);
-        TableUtils.createTableIfNotExists(connection, Item.class);     
+    private static <T> void executeRunner(T t, Consumer<T> consumer) {
+        consumer.accept(t);
     }
 }
