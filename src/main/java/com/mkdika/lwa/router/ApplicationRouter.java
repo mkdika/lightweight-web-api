@@ -26,8 +26,11 @@ package com.mkdika.lwa.router;
 import com.google.inject.Inject;
 import com.mkdika.lwa.app.customer.CustomerHandler;
 import com.mkdika.lwa.app.item.ItemHandler;
+import static io.javalin.ApiBuilder.delete;
 import static io.javalin.ApiBuilder.get;
 import static io.javalin.ApiBuilder.path;
+import static io.javalin.ApiBuilder.post;
+import static io.javalin.ApiBuilder.put;
 import io.javalin.Javalin;
 
 /**
@@ -45,7 +48,13 @@ public class ApplicationRouter {
     public void loadApiHandler(Javalin app) {
         app.routes(() -> {
             path("items", () -> {
-                get(itemHandler::getAllItem);
+                get(itemHandler::getItemAll);
+                post(itemHandler::insertItem);
+                path(":id", () -> {
+                    get(itemHandler::getItemById);
+                    delete(itemHandler::deleteItem);
+                    put(itemHandler::updateItem);
+                });
             });
         });
     }
