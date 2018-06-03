@@ -38,7 +38,7 @@ public class ItemHandler {
     private ItemService itemService;
 
     public void getItemAll(Context ctx) throws SQLException {
-        List<Item> list = itemService.findAllCustomer();
+        List<Item> list = itemService.findAllItem();
         if (list.size() > 0) {
             ctx.json(list).status(200);
         } else {
@@ -47,7 +47,7 @@ public class ItemHandler {
     }
 
     public void getItemById(Context ctx) throws SQLException {
-        Item item = itemService.findCustomerById(Integer.valueOf(ctx.param("id")));
+        Item item = itemService.findItemById(Integer.valueOf(ctx.param("id")));
         if (item != null) {
             ctx.json(item).status(200);
         } else {
@@ -56,9 +56,9 @@ public class ItemHandler {
     }
 
     public void deleteItem(Context ctx) throws SQLException {
-        Item item = itemService.findCustomerById(Integer.valueOf(ctx.param("id")));
+        Item item = itemService.findItemById(Integer.valueOf(ctx.param("id")));
         if (item != null) {
-            itemService.deleteCustomer(item);
+            itemService.deleteItem(item);
             ctx.status(204);
         } else {
             ctx.status(404);
@@ -67,15 +67,15 @@ public class ItemHandler {
 
     public void insertItem(Context ctx) throws SQLException {
         Item item = ctx.bodyAsClass(Item.class);
-        itemService.insertCustomer(item);
+        itemService.insertItem(item);
         ctx.json(item).status(200);
     }
 
     public void updateItem(Context ctx) throws SQLException {
-        Item item = itemService.findCustomerById(Integer.valueOf(ctx.param("id")));
+        Item item = itemService.findItemById(Integer.valueOf(ctx.param("id")));
         Item itemUpdate = ctx.bodyAsClass(Item.class);
         if (item != null) {
-            itemService.updateCustomer(itemUpdate);
+            itemService.updateItem(itemUpdate);
             ctx.json(itemUpdate).status(200);
         } else {
             ctx.status(404);

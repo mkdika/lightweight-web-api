@@ -56,6 +56,15 @@ public class ApplicationRouter {
                     put(itemHandler::updateItem);
                 });
             });
+             path("customers", () -> {
+                get(customerHandler::getCustomerAll);
+                post(customerHandler::insertCustomer);
+                path(":id", () -> {
+                    get(customerHandler::getCustomerById);
+                    delete(customerHandler::deleteCustomer);
+                    put(customerHandler::updateCustomer);
+                });
+            });
         });
     }
 

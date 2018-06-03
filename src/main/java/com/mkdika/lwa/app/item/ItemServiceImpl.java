@@ -47,27 +47,27 @@ public class ItemServiceImpl implements ItemService {
     }
 
     @Override
-    public List<Item> findAllCustomer() throws SQLException {
+    public List<Item> findAllItem() throws SQLException {
         return itemDao.queryForAll();
     }
 
     @Override
-    public Item findCustomerById(int id) throws SQLException {
+    public Item findItemById(int id) throws SQLException {
         return itemDao.queryForId(id);
     }
 
     @Override
-    public void insertCustomer(Item item) throws SQLException {
+    public void insertItem(Item item) throws SQLException {
         itemDao.create(item);
     }
 
     @Override
-    public void updateCustomer(Item item) throws SQLException {
+    public void updateItem(Item item) throws SQLException {
         itemDao.update(item);
     }
 
     @Override
-    public void deleteCustomer(Item item) throws SQLException {
+    public void deleteItem(Item item) throws SQLException {
         itemDao.delete(item);
     }
 }

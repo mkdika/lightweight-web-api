@@ -24,6 +24,10 @@
 package com.mkdika.lwa.app.customer;
 
 import com.google.inject.Inject;
+import com.mkdika.lwa.app.item.Item;
+import io.javalin.Context;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
  *
@@ -33,5 +37,51 @@ public class CustomerHandler {
     
     @Inject
     private CustomerService customerService;
+    
+    public void getCustomerAll(Context ctx) throws SQLException {
+        List<Customer> list = customerService.findAllCustomer();
+        if (list.size() > 0) {
+            ctx.json(list).status(200);
+        } else {
+            ctx.json(list).status(204);
+        }
+    }
+
+    public void getCustomerById(Context ctx) throws SQLException {
+        Customer customer = customerService.findCustomerById(Integer.valueOf(ctx.param("id")));
+        if (customer != null) {
+            ctx.json(customer).status(200);
+        } else {
+            ctx.status(404);
+        }
+    }
+
+    public void deleteCustomer(Context ctx) throws SQLException {
+        Customer customer = customerService.findCustomerById(Integer.valueOf(ctx.param("id")));
+        if (customer != null) {
+            customerService.deleteCustomer(customer);
+            ctx.status(204);
+        } else {
+            ctx.status(404);
+        }
+    }
+
+    public void insertCustomer(Context ctx) throws SQLException {
+        Customer customer = ctx.bodyAsClass(Customer.class);
+        customerService.insertCustomer(customer);
+        ctx.json(customer).status(200);
+    }
+
+    public void updateCustomer(Context ctx) throws SQLException {
+        Customer customer = customerService.findCustomerById(Integer.valueOf(ctx.param("id")));
+        Customer customerUpdate = ctx.bodyAsClass(Customer.class);
+        if (customer != null) {
+            customerService.updateCustomer(customerUpdate);
+            ctx.json(customerUpdate).status(200);
+        } else {
+            ctx.status(404);
+        }
+    }
+
     
 }
