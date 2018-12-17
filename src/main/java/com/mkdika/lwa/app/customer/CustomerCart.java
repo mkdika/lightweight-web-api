@@ -45,7 +45,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "customer_cart")
+@Table(name = "customer_cart",catalog = "testing", schema = "public")
 public class CustomerCart implements Serializable {
 
     @Id

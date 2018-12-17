@@ -23,34 +23,55 @@
  */
 package com.mkdika.lwa;
 
-import com.j256.ormlite.table.TableUtils;
-import com.mkdika.lwa.app.customer.Customer;
-import com.mkdika.lwa.app.customer.CustomerCart;
-import com.mkdika.lwa.app.item.Item;
-import com.mkdika.lwa.helper.AppUtil;
-import static com.mkdika.lwa.helper.DbConnectionFactory.getConnection;
+import com.google.inject.Guice;
+import com.google.inject.Inject;
+import com.google.inject.Injector;
+import com.google.inject.name.Named;
+import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
+import com.mkdika.lwa.config.GuiceBasicModule;
+import com.mkdika.lwa.init.InitDatabase;
+import com.mkdika.lwa.router.ApplicationRouter;
+import io.javalin.Javalin;
 import java.sql.SQLException;
-import java.util.List;
+import java.util.function.Consumer;
+import lombok.Getter;
 
 /**
  *
  * @author Maikel Chandika (mkdika@gmail.com)
  */
-
+@Getter
 public class LightweightWebApiApplication {
-                
-    public static void main(String[] args) throws SQLException {    
-        preInit();
+
+    @Inject
+    private JdbcPooledConnectionSource connection;
+
+    @Inject
+    @Named("javalin.server.port")
+    private int appServerPort;
+
+    public static void main(String[] args) throws SQLException {
+        Injector injector = Guice.createInjector(new GuiceBasicModule());
+        LightweightWebApiApplication starter = injector.getInstance(LightweightWebApiApplication.class);
+        ApplicationRouter appRouter = injector.getInstance(ApplicationRouter.class);
+
+        // init database structure
+        executeRunner(starter.getConnection(),InitDatabase::createDbStructure);
+        
+        // init database dummy data
+        executeRunner(starter.getConnection(), InitDatabase::initDbDataFromSQL);
+
+        // start JAVALIN
+        Javalin app = Javalin.create()
+                .port(starter.getAppServerPort())
+                .start();
+
+        
+        // load all API handler to Javalin app
+        executeRunner(app, appRouter::loadApiHandler);
     }
-    
-    private static void preInit() throws SQLException { 
-        // drop all table & create
-        TableUtils.dropTable(getConnection(), Customer.class, true);
-        TableUtils.dropTable(getConnection(), CustomerCart.class, true);
-        TableUtils.dropTable(getConnection(), Item.class, true);
-        TableUtils.createTableIfNotExists(getConnection(), Customer.class);
-        TableUtils.createTableIfNotExists(getConnection(), CustomerCart.class);
-        TableUtils.createTableIfNotExists(getConnection(), Item.class);                
+
+    private static <T> void executeRunner(T t, Consumer<T> consumer) {
+        consumer.accept(t);
     }
-    
 }

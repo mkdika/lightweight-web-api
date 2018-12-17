@@ -32,14 +32,14 @@ import java.util.List;
  */
 public interface ItemService {
     
-    List<Item> findAllCustomer() throws SQLException;
+    List<Item> findAllItem() throws SQLException;
     
-    Item findCustomerById(int id) throws SQLException;
+    Item findItemById(int id) throws SQLException;
     
-    void insertCustomer(Item item) throws SQLException;
+    void insertItem(Item item) throws SQLException;
     
-    void updateCustomer(Item item) throws SQLException;
+    void updateItem(Item item) throws SQLException;
     
-    void deleteCustomer(Item item) throws SQLException;    
+    void deleteItem(Item item) throws SQLException;    
     
 }

@@ -23,10 +23,63 @@
  */
 package com.mkdika.lwa.app.item;
 
+import com.google.inject.Inject;
+import io.javalin.Context;
+import java.sql.SQLException;
+import java.util.List;
+
 /**
  *
  * @author Maikel Chandika (mkdika@gmail.com)
  */
 public class ItemHandler {
-    
+
+    @Inject
+    private ItemService itemService;
+
+    public void getItemAll(Context ctx) throws SQLException {
+        List<Item> list = itemService.findAllItem();
+        if (list.size() > 0) {
+            ctx.json(list).status(200);
+        } else {
+            ctx.json(list).status(204);
+        }
+    }
+
+    public void getItemById(Context ctx) throws SQLException {
+        Item item = itemService.findItemById(Integer.valueOf(ctx.param("id")));
+        if (item != null) {
+            ctx.json(item).status(200);
+        } else {
+            ctx.status(404);
+        }
+    }
+
+    public void deleteItem(Context ctx) throws SQLException {
+        Item item = itemService.findItemById(Integer.valueOf(ctx.param("id")));
+        if (item != null) {
+            itemService.deleteItem(item);
+            ctx.status(204);
+        } else {
+            ctx.status(404);
+        }
+    }
+
+    public void insertItem(Context ctx) throws SQLException {
+        Item item = ctx.bodyAsClass(Item.class);
+        itemService.insertItem(item);
+        ctx.json(item).status(200);
+    }
+
+    public void updateItem(Context ctx) throws SQLException {
+        Item item = itemService.findItemById(Integer.valueOf(ctx.param("id")));
+        Item itemUpdate = ctx.bodyAsClass(Item.class);
+        if (item != null) {
+            itemService.updateItem(itemUpdate);
+            ctx.json(itemUpdate).status(200);
+        } else {
+            ctx.status(404);
+        }
+    }
+
 }

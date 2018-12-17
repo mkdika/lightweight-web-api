@@ -23,10 +23,49 @@
  */
 package com.mkdika.lwa.router;
 
+import com.google.inject.Inject;
+import com.mkdika.lwa.app.customer.CustomerHandler;
+import com.mkdika.lwa.app.item.ItemHandler;
+import static io.javalin.ApiBuilder.delete;
+import static io.javalin.ApiBuilder.get;
+import static io.javalin.ApiBuilder.path;
+import static io.javalin.ApiBuilder.post;
+import static io.javalin.ApiBuilder.put;
+import io.javalin.Javalin;
+
 /**
  *
  * @author Maikel Chandika (mkdika@gmail.com)
  */
 public class ApplicationRouter {
-    
+
+    @Inject
+    private ItemHandler itemHandler;
+
+    @Inject
+    private CustomerHandler customerHandler;
+
+    public void loadApiHandler(Javalin app) {
+        app.routes(() -> {
+            path("items", () -> {
+                get(itemHandler::getItemAll);
+                post(itemHandler::insertItem);
+                path(":id", () -> {
+                    get(itemHandler::getItemById);
+                    delete(itemHandler::deleteItem);
+                    put(itemHandler::updateItem);
+                });
+            });
+             path("customers", () -> {
+                get(customerHandler::getCustomerAll);
+                post(customerHandler::insertCustomer);
+                path(":id", () -> {
+                    get(customerHandler::getCustomerById);
+                    delete(customerHandler::deleteCustomer);
+                    put(customerHandler::updateCustomer);
+                });
+            });
+        });
+    }
+
 }

@@ -23,9 +23,10 @@
  */
 package com.mkdika.lwa.app.item;
 
+import com.google.inject.Inject;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
-import static com.mkdika.lwa.helper.DbConnectionFactory.getConnection;
+import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -35,35 +36,38 @@ import java.util.List;
  */
 public class ItemServiceImpl implements ItemService {
 
+    private final JdbcPooledConnectionSource connection;
+
     private final Dao<Item, Integer> itemDao;
 
-    public ItemServiceImpl() throws SQLException {
-        itemDao = DaoManager.createDao(getConnection(), Item.class);
+    @Inject
+    public ItemServiceImpl(JdbcPooledConnectionSource connection) throws SQLException {
+        this.connection = connection;
+        itemDao = DaoManager.createDao(this.connection, Item.class);
     }
 
     @Override
-    public List<Item> findAllCustomer() throws SQLException {
+    public List<Item> findAllItem() throws SQLException {
         return itemDao.queryForAll();
     }
 
     @Override
-    public Item findCustomerById(int id) throws SQLException {
+    public Item findItemById(int id) throws SQLException {
         return itemDao.queryForId(id);
     }
 
     @Override
-    public void insertCustomer(Item item) throws SQLException {
+    public void insertItem(Item item) throws SQLException {
         itemDao.create(item);
     }
 
     @Override
-    public void updateCustomer(Item item) throws SQLException {
+    public void updateItem(Item item) throws SQLException {
         itemDao.update(item);
     }
 
     @Override
-    public void deleteCustomer(Item item) throws SQLException {
+    public void deleteItem(Item item) throws SQLException {
         itemDao.delete(item);
     }
-
 }

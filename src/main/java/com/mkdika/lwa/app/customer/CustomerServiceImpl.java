@@ -23,9 +23,10 @@
  */
 package com.mkdika.lwa.app.customer;
 
+import com.google.inject.Inject;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.dao.DaoManager;
-import static com.mkdika.lwa.helper.DbConnectionFactory.getConnection;
+import com.j256.ormlite.jdbc.JdbcPooledConnectionSource;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -35,10 +36,13 @@ import java.util.List;
  */
 public class CustomerServiceImpl implements CustomerService {
 
+    private final JdbcPooledConnectionSource connection;
     private final Dao<Customer, Integer> customerDao;
 
-    public CustomerServiceImpl() throws SQLException {
-        customerDao = DaoManager.createDao(getConnection(), Customer.class);
+    @Inject
+    public CustomerServiceImpl(JdbcPooledConnectionSource connection) throws SQLException {
+        this.connection = connection;
+        customerDao = DaoManager.createDao(this.connection, Customer.class);
     }
 
     @Override
@@ -65,5 +69,4 @@ public class CustomerServiceImpl implements CustomerService {
     public void deleteCustomer(Customer c) throws SQLException {
         customerDao.delete(c);
     }
-
 }

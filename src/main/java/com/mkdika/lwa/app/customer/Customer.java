@@ -41,7 +41,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "customer")
+@Table(name = "customer",catalog = "testing", schema = "public")
 public class Customer implements Serializable {
 
     @Id
